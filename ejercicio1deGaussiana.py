@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def gauss_elimination(A, b):
     n = len(b)
@@ -25,9 +26,25 @@ def gauss_elimination(A, b):
 A = np.array([[3, 2, -1, 4], [5, -3, 2, -1], [-1, 4, -2, 3], [2, -1, 3, 5]], dtype=float)
 b = np.array([10, 5, -3, 8], dtype=float)
 
+# Copia de los valores originales de A y b (para cálculo de error)
+A_original = A.copy()
+b_original = b.copy()
+
 # Resolución del sistema
 sol = gauss_elimination(A, b)
+
+# Calcular el residuo (error absoluto)
+residuo = np.dot(A_original, sol) - b_original
+error_absoluto = np.abs(residuo)
 
 # Imprimir la solución
 print("Solución del sistema (Ejercicio 1):")
 print(sol)
+
+# Graficar el error absoluto
+plt.figure(figsize=(8, 5))
+plt.bar(range(1, len(error_absoluto) + 1), error_absoluto, color='red', alpha=0.7)
+plt.xlabel("Ecuación")
+plt.ylabel("Error absoluto")
+plt.title("Error en cada ecuación del sistema")
+plt.show()
